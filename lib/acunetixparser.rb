@@ -22,7 +22,8 @@ class Acunetixparser
 			hash[:recommendation] = vuln.css('Recommendation').text
 			hash[:severity] = set_severity(vuln.attr('color'))
 			begin
-				host = vuln.css('Request').text.split('Host: ')[1].split('.')[0]
+				#host = vuln.css('Request').text.split('Host: ')[1].split('.')[0]
+				host = xml.css('StartURL').text.split('.')[0].split('/')[-1]
 			rescue
 				host = "unknown"
 			end
@@ -48,13 +49,15 @@ class Acunetixparser
 	def set_family(host)
 		case host
 		when "genevafedramp1"
-			return "Geneva"
+			return "Istanbul"
 		when "fujifedramp1"
 			return "Fuji"
 		when "prodsecfedramphelsinki"
 			return "Helsinki"
 		when "prodsecfedrampistanbul"
 			return "Istanbul"
+		when "prodsecfedrampjakarta"
+			return "Jakarta"
 		else
 			return "Unknown"
 		end

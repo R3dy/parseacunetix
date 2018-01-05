@@ -7,48 +7,51 @@ require 'vulnerability'
 require 'acunetixparser'
 require 'rubyXL'
 
-xml = File.open(ARGV[0], 'r')
-parser = Acunetixparser.new(xml)
-
 report = RubyXL::Workbook.new
-worksheet = report.add_worksheet("Findings")
 
-# Set Header Rows
-worksheet.add_cell(0, 0, "Weakness Name")
-worksheet.add_cell(0, 1, "Weakness Description")
-worksheet.add_cell(0, 2, "Asset Identifier")
-worksheet.add_cell(0, 3, "Original Detection Date")
-worksheet.add_cell(0, 4, "Original Risk Rating")
-worksheet.add_cell(0, 5, "Adjusted Risk Rating")
-worksheet.add_cell(0, 6, "Deviation Rationale")
-worksheet.add_cell(0, 7, "Comments")
-worksheet.add_cell(0, 8, "Recommendation")
-worksheet.add_cell(0, 9, "PRB Created")
+ARGV.each do |arg|
+	xml = File.open(arg, 'r')
+	parser = Acunetixparser.new(xml)
+	worksheet = report.add_worksheet(parser.vulnerabilities[0].asset_identifier)
 
-# Set column widths
-worksheet.change_row_bold(0, true)
-worksheet.change_column_width(0, 50)
-worksheet.change_column_width(1, 50)
-worksheet.change_column_width(2, 20)
-worksheet.change_column_width(3, 20)
-worksheet.change_column_width(4, 20)
-worksheet.change_column_width(5, 20)
-worksheet.change_column_width(6, 50)
-worksheet.change_column_width(7, 50)
-worksheet.change_column_width(8, 50)
-worksheet.change_column_width(9, 20)
+	# Set Header Rows
+	worksheet.add_cell(0, 0, "Weakness Name")
+	worksheet.add_cell(0, 1, "Weakness Description")
+	worksheet.add_cell(0, 2, "Asset Identifier")
+	worksheet.add_cell(0, 3, "Original Detection Date")
+	worksheet.add_cell(0, 4, "Original Risk Rating")
+	worksheet.add_cell(0, 5, "Adjusted Risk Rating")
+	worksheet.add_cell(0, 6, "Deviation Rationale")
+	worksheet.add_cell(0, 7, "Comments")
+	worksheet.add_cell(0, 8, "Recommendation")
+	worksheet.add_cell(0, 9, "PRB Created")
 
-parser.vulnerabilities.each_with_index do |vuln, x|
-	worksheet.add_cell(x+1, 0, vuln.name)
-	worksheet.add_cell(x+1, 1, vuln.description)
-	worksheet.add_cell(x+1, 2, vuln.asset_identifier)
-	worksheet.add_cell(x+1, 4, vuln.severity)
-	worksheet.add_cell(x+1, 5, vuln.severity)
-	worksheet.add_cell(x+1, 8, vuln.recommendation)
-	worksheet[x+1][0].change_text_wrap(true)
-	worksheet[x+1][1].change_text_wrap(true)
-	worksheet[x+1][8].change_text_wrap(true)
+	# Set column widths
+	worksheet.change_row_bold(0, true)
+	worksheet.change_column_width(0, 50)
+	worksheet.change_column_width(1, 50)
+	worksheet.change_column_width(2, 20)
+	worksheet.change_column_width(3, 20)
+	worksheet.change_column_width(4, 20)
+	worksheet.change_column_width(5, 20)
+	worksheet.change_column_width(6, 50)
+	worksheet.change_column_width(7, 50)
+	worksheet.change_column_width(8, 50)
+	worksheet.change_column_width(9, 20)
+
+	parser.vulnerabilities.each_with_index do |vuln, x|
+		worksheet.add_cell(x+1, 0, vuln.name)
+		worksheet.add_cell(x+1, 1, vuln.description)
+		worksheet.add_cell(x+1, 2, vuln.asset_identifier)
+		worksheet.add_cell(x+1, 4, vuln.severity)
+		worksheet.add_cell(x+1, 5, vuln.severity)
+		worksheet.add_cell(x+1, 8, vuln.recommendation)
+		worksheet[x+1][0].change_text_wrap(true)
+		worksheet[x+1][1].change_text_wrap(true)
+		worksheet[x+1][8].change_text_wrap(true)
+	end
 end
+
 
 report.write("./output.xlsx")
 
