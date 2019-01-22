@@ -45,7 +45,7 @@ ARGV.each do |arg|
 		worksheet.add_cell(x+1, 0, vuln.name)
 		worksheet.add_cell(x+1, 1, vuln.description)
 		worksheet.add_cell(x+1, 2, vuln.asset_identifier)
-		worksheet.add_chell(x+1, 4, vuln.cvss)
+		worksheet.add_cell(x+1, 4, vuln.cvss)
 		worksheet.add_cell(x+1, 5, vuln.severity)
 		worksheet.add_cell(x+1, 6, vuln.severity)
 		worksheet.add_cell(x+1, 9, vuln.recommendation)
