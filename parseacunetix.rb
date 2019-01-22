@@ -19,12 +19,13 @@ ARGV.each do |arg|
 	worksheet.add_cell(0, 1, "Weakness Description")
 	worksheet.add_cell(0, 2, "Asset Identifier")
 	worksheet.add_cell(0, 3, "Original Detection Date")
-	worksheet.add_cell(0, 4, "Original Risk Rating")
-	worksheet.add_cell(0, 5, "Adjusted Risk Rating")
-	worksheet.add_cell(0, 6, "Deviation Rationale")
-	worksheet.add_cell(0, 7, "Comments")
-	worksheet.add_cell(0, 8, "Recommendation")
-	worksheet.add_cell(0, 9, "PRB Created")
+	worksheet.add_cell(0, 4, "CVSS")
+	worksheet.add_cell(0, 5, "Original Risk Rating")
+	worksheet.add_cell(0, 6, "Adjusted Risk Rating")
+	worksheet.add_cell(0, 7, "Deviation Rationale")
+	worksheet.add_cell(0, 8, "Comments")
+	worksheet.add_cell(0, 9, "Recommendation")
+	worksheet.add_cell(0, 10, "PRB Created")
 
 	# Set column widths
 	worksheet.change_row_bold(0, true)
@@ -34,24 +35,25 @@ ARGV.each do |arg|
 	worksheet.change_column_width(3, 20)
 	worksheet.change_column_width(4, 20)
 	worksheet.change_column_width(5, 20)
-	worksheet.change_column_width(6, 50)
+	worksheet.change_column_width(6, 20)
 	worksheet.change_column_width(7, 50)
 	worksheet.change_column_width(8, 50)
-	worksheet.change_column_width(9, 20)
+	worksheet.change_column_width(9, 50)
+	worksheet.change_column_width(10, 20)
 
 	parser.vulnerabilities.each_with_index do |vuln, x|
 		worksheet.add_cell(x+1, 0, vuln.name)
 		worksheet.add_cell(x+1, 1, vuln.description)
 		worksheet.add_cell(x+1, 2, vuln.asset_identifier)
-		worksheet.add_cell(x+1, 4, vuln.severity)
+		worksheet.add_chell(x+1, 4, vuln.cvss)
 		worksheet.add_cell(x+1, 5, vuln.severity)
-		worksheet.add_cell(x+1, 8, vuln.recommendation)
+		worksheet.add_cell(x+1, 6, vuln.severity)
+		worksheet.add_cell(x+1, 9, vuln.recommendation)
 		worksheet[x+1][0].change_text_wrap(true)
 		worksheet[x+1][1].change_text_wrap(true)
-		worksheet[x+1][8].change_text_wrap(true)
+		worksheet[x+1][9].change_text_wrap(true)
 	end
 end
 
 
 report.write("./output.xlsx")
-
