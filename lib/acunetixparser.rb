@@ -21,7 +21,7 @@ class Acunetixparser
 			hash[:description] = vuln.css('Description').text
 			hash[:recommendation] = vuln.css('Recommendation').text
 			hash[:severity] = set_severity(vuln.attr('color'))
-			hash[:cvss] = vuln.css('CVSS').text
+			hash[:cvss] = vuln.css("CVSS").css('Score').text
 			begin
 				#host = vuln.css('Request').text.split('Host: ')[1].split('.')[0]
 				host = xml.css('StartURL').text.split('.')[0].split('/')[-1]

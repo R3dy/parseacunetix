@@ -27,11 +27,18 @@ GEM
     coderay (1.1.1)
     hitimes (1.2.4)
     method_source (0.8.2)
+    mini_portile2 (2.4.0)
+    nokogiri (1.10.1)
+      mini_portile2 (~> 2.4.0)
     pry (0.10.4)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
     ruby-progressbar (1.8.1)
+    rubyXL (3.3.33)
+      nokogiri (>= 1.4.4)
+      rubyzip (>= 1.1.6)
+    rubyzip (1.2.2)
     slop (3.6.0)
     timers (4.1.2)
       hitimes
@@ -43,7 +50,8 @@ DEPENDENCIES
   celluloid
   pry
   ruby-progressbar
+  rubyXL
   thread!
 
 BUNDLED WITH
-   1.11.2
+   2.0.1
